@@ -47,13 +47,20 @@
             // 
             // button_stop
             // 
+            this.button_stop.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button_stop.BackColor = System.Drawing.Color.Black;
+            this.button_stop.BackgroundImage = global::AppLauncher.Properties.Resources.stop;
+            this.button_stop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_stop.FlatAppearance.BorderSize = 0;
+            this.button_stop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_stop.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(134)));
-            this.button_stop.Location = new System.Drawing.Point(12, 676);
+            this.button_stop.ForeColor = System.Drawing.Color.White;
+            this.button_stop.Location = new System.Drawing.Point(467, 676);
             this.button_stop.Name = "button_stop";
             this.button_stop.Size = new System.Drawing.Size(80, 80);
             this.button_stop.TabIndex = 0;
             this.button_stop.Text = "停止";
-            this.button_stop.UseVisualStyleBackColor = true;
+            this.button_stop.UseVisualStyleBackColor = false;
             this.button_stop.Click += new System.EventHandler(this.button_stop_Click);
             // 
             // FormShow
@@ -65,6 +72,7 @@
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FormShow";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FormShow_Load);

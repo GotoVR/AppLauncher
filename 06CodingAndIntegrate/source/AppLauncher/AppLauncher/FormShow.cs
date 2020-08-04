@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AppLauncher.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -32,7 +33,7 @@ namespace AppLauncher
                 return;
             }
             if (AppProcess.MainWindowHandle == IntPtr.Zero)
-            { 
+            {
                 return;
             }
             //Application.Idle -= appIdleEvent;
@@ -88,32 +89,32 @@ namespace AppLauncher
             return (embedResult != 0);
         }
 
-        private string m_AppFilename = "";
-        public string AppFilename
+        private Products m_products;
+        public Products Products
         {
             get
             {
-                return m_AppFilename;
+                return m_products;
             }
             set
             {
-                if (value == null || value == m_AppFilename) return;
+                if (value == null || value == m_products) return;
                 var self = Application.ExecutablePath;
-                if (value.ToLower() == self.ToLower())
+                if (value.ExePath.ToLower() == self.ToLower())
                 {
                     MessageBox.Show("Please don't embed yourself！", "SmileWei.EmbeddedApp");
                     return;
                 }
-                if (!value.ToLower().EndsWith(".exe"))
+                if (!value.ExePath.ToLower().EndsWith(".exe"))
                 {
                     MessageBox.Show("target is not an *.exe！", "SmileWei.EmbeddedApp");
                 }
-                if (!File.Exists(value))
+                if (!File.Exists(value.ExePath))
                 {
                     MessageBox.Show("target does not exist！", "SmileWei.EmbeddedApp");
                     return;
                 }
-                m_AppFilename = value;
+                m_products = value;
             }
         }
 
@@ -139,30 +140,30 @@ namespace AppLauncher
 
             try
             {
-                ProcessStartInfo info = new ProcessStartInfo(this.m_AppFilename);
+                if (m_products == null || !File.Exists(m_products.ExePath))
+                {
+                    return;
+                }
 
-                //设置启动动作,确保以管理员身份运行
+                ProcessStartInfo info = new ProcessStartInfo(m_products.ExePath);
+
                 info.Verb = "open";
 
                 info.UseShellExecute = false;
                 info.WindowStyle = ProcessWindowStyle.Minimized;
-                //info.WindowStyle = ProcessWindowStyle.Hidden;
-                AppProcess = System.Diagnostics.Process.Start(info);
-                // Wait for process to be created and enter idle condition
-                AppProcess.WaitForInputIdle();
-                //todo:下面这两句会引发 NullReferenceException 异常，不知道怎么回事                
-                //AppProcess.Exited += new EventHandler(AppProcess_Exited);
-                //AppProcess.EnableRaisingEvents = true;
+                AppProcess = Process.Start(info);
+
                 Application.Idle += appIdleEvent;
+
+                AppProcess.Exited += AppProcess_Exited;
+                AppProcess.EnableRaisingEvents = true;
+
+                AppProcess.WaitForInputIdle();
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, string.Format("{1}{0}{2}{0}{3}"
-                    , Environment.NewLine
-                    , "*" + ex.ToString()
-                    , "*StackTrace:" + ex.StackTrace
-                    , "*Source:" + ex.Source
-                    ), "Failed to load app.");
+                MessageBox.Show(this, string.Format("{1}{0}{2}{0}{3}", Environment.NewLine, "*" + ex.ToString(), "*StackTrace:" + ex.StackTrace, "*Source:" + ex.Source), "Failed to load app.");
                 if (AppProcess != null)
                 {
                     if (!AppProcess.HasExited)
@@ -172,7 +173,29 @@ namespace AppLauncher
                     AppProcess = null;
                 }
             }
+        }
 
+        private void AppProcess_Exited(object sender, EventArgs e)
+        {
+            try
+            {
+                Dosomething();
+            }
+            catch (Exception)
+            {
+
+            }
+
+        }
+
+        void Dosomething()
+        {
+            BeginInvoke(new Action(DoSomethingAction));
+        }
+
+        void DoSomethingAction()
+        {
+            Close();
         }
 
         public int embedResult = 0;
