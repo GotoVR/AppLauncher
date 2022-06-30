@@ -46,13 +46,13 @@
             this.panel6 = new System.Windows.Forms.Panel();
             this.button_restart = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
+            this.label_version = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
             this.button_exit = new System.Windows.Forms.Button();
             this.panel8 = new System.Windows.Forms.Panel();
             this.button_admin = new System.Windows.Forms.Button();
             this.openApp = new System.Windows.Forms.OpenFileDialog();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.label_version = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -245,6 +245,14 @@
             this.panel7.Size = new System.Drawing.Size(1018, 149);
             this.panel7.TabIndex = 2;
             // 
+            // label_version
+            // 
+            this.label_version.AutoSize = true;
+            this.label_version.Location = new System.Drawing.Point(126, 131);
+            this.label_version.Name = "label_version";
+            this.label_version.Size = new System.Drawing.Size(0, 12);
+            this.label_version.TabIndex = 2;
+            // 
             // panel9
             // 
             this.panel9.Controls.Add(this.button_exit);
@@ -298,14 +306,6 @@
             this.timer1.Enabled = true;
             this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // label_version
-            // 
-            this.label_version.AutoSize = true;
-            this.label_version.Location = new System.Drawing.Point(126, 131);
-            this.label_version.Name = "label_version";
-            this.label_version.Size = new System.Drawing.Size(0, 12);
-            this.label_version.TabIndex = 2;
             // 
             // FormMain
             // 
